@@ -1,0 +1,333 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='styles/level.css') }}">
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Josefin+Sans:wght@300&family=Nunito:wght@300&family=Outfit:wght@300&display=swap" rel="stylesheet">
+        <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@300..700&display=swap" rel="stylesheet">
+
+        <style>
+            .confirmation {
+                transition-duration: 0.5s;
+                display: flex;
+                justify-content: center;
+                flex-direction: column;
+                align-items: center;
+                position: fixed;
+                width: 100%;
+                height: 100%;
+                top: 0;
+                left: 0;
+                background-color: rgba(12,12,12,0.6);
+                border-style: solid;
+                border-width: 1px;
+                border-color: transparent;
+                backdrop-filter: blur(4px);
+                z-index: -10;
+                opacity: 0;
+            }
+            .confirmation h1 {
+                width: 70%;
+                text-align: center;
+            }
+            .confirmation .group-btn {
+                width: 30%;
+                display: flex;
+                justify-content: space-evenly;
+                flex-direction: row;
+                align-items: center;
+                font-size: 30pt;
+            }
+            .group-btn a, .group-btn p {
+                transition-duration: 0.5s;
+            }
+            .group-btn a:hover, .group-btn p:hover {
+                scale: 1.3;
+            }
+        </style>
+    </head>
+    <body>
+        <div id="vid-bg">
+            <video autoplay muted width="100%" height="100%" loop onloadstart="this.playbackRate = 0.5;" >
+                <source src="/static/Vids/4.mp4" type="video/mp4">
+                <source src="/static/Vids/4.mp4" type="video/ogg">
+            </video>
+            <audio autoplay id = "bg">
+                <source src="/static/Vids/game.mp3" type="audio/mpeg">
+            </audio>
+        </div>
+
+        <div class="confirmation">
+            <h1 style="color: white;">
+                Are you sure you want to exit?
+                (All answer will be lost.)
+            </h1>
+            <div class="group-btn">
+                <a href="/levels" style="text-decoration: none; color:white;">
+                    Yes
+                </a>
+                <p id = "no" style="color: white;">
+                    No
+                </p>
+            </div>
+        </div>
+            <div class = "top-container">
+                <div class = "close-container">
+                    <a id = "logout" style="color: white;">&#10005;</a>
+                </div>
+                <div class = "progress-container">
+                    <div class="progress-bar"  id = "progress">
+                        a
+                    </div>
+                </div>
+            </div>
+
+        <form method="post" >
+            <div class="question-container">
+
+                <!--
+                <div class="question">
+                    <div class="question-main">
+                        <p>What is the element of this symbol?</p>
+                    </div>
+                    <div class="question-object">
+                        <h1>H</h1>
+                    </div>
+                </div>
+
+                <div class="answer">
+                    
+                    <div class="choices" id = "first">
+                        <input type="radio" id = "1" name = "choice" value="Hello">
+                        <label for="1">Choice 1</label>
+                    </div>
+                    <div class="choices" id = "second">
+                        <input type="radio" id = "2" name = "choice" value="Hello">
+                        <label for="2">Choice 2</label>
+                    </div>
+                    <div class="choices" id = "third">
+                        <input type="radio" id = "3" name = "choice" value="Hello">
+                        <label for="3">Choice 3</label>
+                    </div>
+                    <div class="choices" id = "fourth">
+                        <input type="radio" id = "4" name = "choice" value="Hello">
+                        <label for="4">Choice 4</label>
+                    </div>     
+                    
+                    <div class = "identification">
+                        <input type="text" placeholder="Write your answer here...">      
+                    </div>
+                            -->
+                </div>
+            </div>
+            <p class = "next" >Next</p>
+            <p class = "previous">Previous</p>
+            <input type="text" hidden name = "timetaken" value="0" id = "times">
+            <input type="text" hidden name = "totalseconds" value="0" id = "totalsec">
+        </form>
+        <audio id="nextsound">
+            <source src="/static/Vids/bubbles.mp3" type="audio/mpeg">
+        </audio>
+
+    <script>
+        progressbar = document.getElementById("progress");
+        progress = 10;
+        var a = {{content|tojson}};
+        questioncontainer = document.getElementsByClassName("question-container");
+        time = 0;
+        seconds = 0;
+        minutes = 0;
+        setInterval(() => {
+            time += 1;
+            seconds = time % 60;
+            document.getElementById('times').value = `${minutes}:${seconds}`;
+            document.getElementById('totalsec').value = time;
+        }, 1000);
+        setInterval(()=> {
+            minutes += 1;
+        }, 60000);
+        gheh();
+
+
+        function gheh(){
+            for(const i of a){
+                if (i["hasChoices"]){
+                    
+                    if(i["hasPic"]){
+                        questioncontainer[0].innerHTML += `
+                        <div class="question" style = "display:none;">
+                            <div class="question-main">
+                                <p>${i["question"]}</p>
+                            </div>
+                            <div class="question-object" style="margin: 0%;">
+                                <img src = "${i["imagelink"]}">
+                            </div>
+                        </div>`;
+                    }
+                    else {
+                        questioncontainer[0].innerHTML += `
+                        <div class="question" style = "display:none;">
+                            <div class="question-main">
+                                <p>${i["question"]}</p>
+                            </div>
+                            <div class="question-object" >
+                                <h1>${i["questionobj"]}</h1>
+                            </div>
+                        </div>`;
+                    }
+                    questioncontainer[0].innerHTML += `
+                        <div class="answer" style = "display:none;">
+                            
+                            <div class="choices" id = "first">
+                                <input type="radio" id = "1" name = "${a.indexOf(i)}" value="${i["choices"][0]}" required>
+                                <label for="1" >${i["choices"][0]}</label>
+                            </div>
+                            <div class="choices" id = "second">
+                                <input type="radio" id = "2" name = "${a.indexOf(i)}" value="${i["choices"][1]}" required>
+                                <label for="2">${i["choices"][1]}</label>
+                            </div>
+                            <div class="choices" id = "third">
+                                <input type="radio" id = "3" name = "${a.indexOf(i)}" value="${i["choices"][2]}" required>
+                                <label for="3">${i["choices"][2]}</label>
+                            </div>
+                            <div class="choices" id = "fourth">
+                                <input type="radio" id = "4" name = "${a.indexOf(i)}" value="${i["choices"][3]}" required>
+                                <label for="4">${i["choices"][3]}</label>
+                            </div>     
+
+                            <!--
+                            <div class = "identification">
+                                <input type="text" placeholder="Write your answer here...">      
+                            </div>
+                                    -->
+                        </div>
+                    
+                    
+                    `;
+                }
+                else {
+                    if(i["hasPic"]){
+                        questioncontainer[0].innerHTML += `
+                        <div class="question" style = "display:none;">
+                            <div class="question-main">
+                                <p>${i["question"]}</p>
+                            </div>
+                            <div class="question-object" style="margin: 0%;">
+                                <img src = "${i["imagelink"]}">
+                            </div>
+                        </div>`;
+                    }
+                    else {
+                        questioncontainer[0].innerHTML += `
+                        <div class="question" style = "display:none;">
+                            <div class="question-main">
+                                <p>${i["question"]}</p>
+                            </div>
+                            <div class="question-object">
+                                <h1>${i["questionobj"]}</h1>
+                            </div>
+                        </div>`;
+                    }
+
+                    questioncontainer[0].innerHTML += `
+                    
+
+                        <div class="answer" style = "display:none; z-index: ${a.indexOf(i)};">
+            
+                            <div class = "identification">
+                                <input type="text" name = "${a.indexOf(i)}" placeholder="Write your answer here..." required>      
+                            </div>
+                                    
+                        </div>
+                    
+                    
+                    `;
+                }
+                    
+            }
+            allchoices = document.getElementsByClassName("choices"); 
+            allquestions = document.getElementsByClassName("question");
+            
+            for (const i of allchoices){
+                i.addEventListener("click", ()=>{
+                    i.children[0].checked = true;
+                });
+                
+            }
+            
+        }
+        
+        allquestions = document.getElementsByClassName("question");
+        allanswer = document.getElementsByClassName("answer");
+        pointer = 0;
+        document.getElementById("bg").play();
+        allquestions[pointer].style.display = "flex";
+        allanswer[pointer].style.display = "flex";
+    
+        rightbtn = document.getElementsByClassName("next");
+        leftbtn = document.getElementsByClassName("previous");
+        check();
+        function check(){
+           
+            if (pointer==9){
+                rightbtn[0].innerHTML = "<input type = 'submit' value = 'Submit'>";
+            }
+            else {
+                rightbtn[0].style.marginBottom = "0vh";
+                rightbtn[0].innerHTML = "<p>Next</p>";
+            }
+            if (pointer==0){
+                leftbtn[0].style.marginBottom = "-30vh";
+            }
+            else {
+                leftbtn[0].style.marginBottom = "0vh";
+            }
+            
+        }
+        progressbar.style.width = `${progress}%`;
+        thocc = document.getElementById("nextsound");
+
+
+        rightbtn[0].addEventListener("click", ()=>{
+            if (pointer < 9){
+                allquestions[pointer].style.display = "none";
+                allanswer[pointer].style.display = "none";
+                pointer++;
+                check();
+                allquestions[pointer].style.display = "flex";
+                allanswer[pointer].style.display = "flex";
+                progress += 10;
+                progressbar.style.width = `${progress}%`;
+                thocc.play()
+            }
+        });
+
+        leftbtn[0].addEventListener("click", ()=>{
+            if (pointer > 0){
+                allquestions[pointer].style.display = "none";
+                allanswer[pointer].style.display = "none";
+                pointer--;
+                check();
+                allquestions[pointer].style.display = "flex";
+                allanswer[pointer].style.display = "flex";
+                progress -= 10;
+                progressbar.style.width = `${progress}%`;
+                thocc.play()
+            }
+        });
+        document.getElementById("logout").addEventListener("click", ()=>{
+                confirmation = document.getElementsByClassName("confirmation")[0];
+                confirmation.style.opacity = "1";
+                confirmation.style.zIndex = "10";
+            });
+            document.getElementById("no").addEventListener("click", ()=>{
+                confirmation = document.getElementsByClassName("confirmation")[0];
+                confirmation.style.opacity = "0";
+                confirmation.style.zIndex = "-10";
+            });
+        function click(element){
+        }
+    </script>
+    </body>
+</html>

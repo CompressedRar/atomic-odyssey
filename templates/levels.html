@@ -1,0 +1,74 @@
+{%extends "nav-bar.html"%}
+
+{%block content%}
+    <body style = "overflow: hidden;">
+        <div class="carousel-container">
+            <div id = "leftbutton">
+                <button>
+                    &#11164;
+                </button>
+            </div>
+            <div class = "carousel">
+                <div class="level" id ="lvl1">                    
+                    <form action = "#" class = "gradient" method="post">
+                        <h1>Level 1</h1>
+                        <p>Hydrogen-Neon</p>
+                        <input type="text" name = "level" value = "1" hidden>
+                        <input type="submit" value = "Play">
+                    </form>
+                </div>
+
+                <div class="level" id ="lvl2">
+                    <form action = "#" class = "gradient" method="post">
+                        <h1>Level 1</h1>
+                        <p>Hydrogen-Neon</p>
+                        <input type="text" name = "level" value = "2" hidden>
+                        <input type="submit"value = "Play">
+                    </form>
+                </div>
+                
+                <div class="level" id ="lvl3">
+                    <form action = "#" class = "gradient" method="post">
+                        <h1>Level 1</h1>
+                        <p>Hydrogen-Neon</p>
+                        <input type="text" name = "level" value = "3" hidden>
+                        <input type="submit"value = "Play">
+                    </form>
+                </div>
+
+                <div class="level" id ="lvl4">
+                    <form action = "#" class = "gradient" method="post">
+                        <h1>Level 1</h1>
+                        <p>Hydrogen-Neon</p>
+                        <input type="text" name = "level" value = "4" hidden>
+                        <input type="submit"value = "Play">
+                    </form>
+                </div>
+
+                <div class="level" id ="lvl5">
+                    <form action = "#" class = "gradient" method="post">
+                        <h1>Level 1</h1>
+                        <p>Hydrogen-Neon</p>
+                        <input type="text" name = "level" value = "5" hidden>
+                        <input type="submit"value = "Play">
+                    </form>
+                </div>
+
+                <div class="level" id ="lvl6">
+                    <form action = "#" class = "gradient" method="post">
+                        <h1>Level 1</h1>
+                        <p>Hydrogen-Neon</p>
+                        <input type="text" name = "level" value = "6" hidden>
+                        <input type="submit"value = "Play">
+                    </form>
+                </div>
+            </div>
+            <div id = "rightbutton">
+                <button>
+                    &#11166;
+                </button>
+            </div>
+        </div>  
+        <script src = "{{url_for('static', filename = 'script/levelcarousel.js')}}"></script>
+    </body>
+{% endblock %}

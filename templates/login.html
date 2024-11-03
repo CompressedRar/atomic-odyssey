@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='styles/login.css') }}">
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Josefin+Sans:wght@300&family=Nunito:wght@300&family=Outfit:wght@300&display=swap" rel="stylesheet">
+        <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@300..700&display=swap" rel="stylesheet">
+    </head>
+    <body>
+        <div id = "bg-div" class = "background-container"> 
+            <img src="{{url_for('static', filename= 'styles/background.png')}}">
+        </div>    
+        <input id = "mode" value = {{model}} hidden="true"> 
+        <iframe name = "dummy" id = "dummy" style="display:none"></iframe>
+        <div class = "logo-container">
+            <img width = "500"  height = "500" id = "logo-container__img" src="{{url_for('static', filename='styles/logo.png')}}"/>
+            <h1>Fun begins with an adventure.</h1>
+        </div>
+        <div class = "login-container" >
+            <div class = "login-container__contents" id = "login-form">
+                <h1>Login to</h1>
+                <h2>Atomic Odyssey</h2>
+                {% with messages = get_flashed_messages() %}
+                    {% if messages %}
+                        {% for msg in messages%}
+                            <div class = "signin-msg">
+                                <p>{{msg}}</p>
+                            </div>
+                        {% endfor %}
+                    {% endif%}
+                {% endwith%}
+                <form class = "login-container__form" method = "post" >
+                    <input type = "text" name = "mode" hidden="true" value = "login">
+                    <input type = "text" name = "login-username" placeholder="Username" required>
+                    <input type = "password" name = "login-password" placeholder="Password" required>
+                    <a href="/forgot" style = "text-decoration: none; color: rgb(32, 137, 241);align-self: last baseline; margin-right: 10%; font-size: 10pt;">
+                        Forgot Password?
+                    </a>
+                    <input type="submit" value="Login">
+                </form>
+                <p>
+                    Don't have an account?
+                    <label id = "create-account__label">Create one here.</label>
+                </p>
+            </div>            
+        </div>
+        <div class = "signup-container" id = "signin-form">        
+            <form action = "#" class = "signup-container__form" method = "post" >
+                <h1>Create account to use for signing in.</h1>
+                {%block content%}
+                    {% with messages = get_flashed_messages(category_filter = "signin") %}
+                        {% if messages %}
+                            {% for msg in messages%}
+                                <p>{{msg}}</p>
+                            {% endfor %}
+                        {% endif %}
+                    {% endwith %}
+                {%endblock%}
+                <input type = "text" name = "mode" hidden="true" value="signin">
+                <input type = "text" name = "signup-ign" placeholder="IGN" required>  
+                <input type = "text" name = "signup-username" placeholder="Username" required>
+                <input type = "password" id = "firstpass" name = "signup-password" placeholder="Password (8 or more characters)" required>
+                <input type = "password" id = "secondpass" name = "signup-confirmpassword" placeholder="Confirm Password (8 or more characters)" required>
+                <input type="submit" id="sign-btn" value="Create" disabled>
+                <p>
+                    Already have an account?
+                    <label id = "login-account_label">Login here.</label>
+                </p>
+            </form>            
+        </div>
+        <script src = "{{url_for('static', filename = 'script/signingin.js')}}"></script>
+    </body>
+</html>

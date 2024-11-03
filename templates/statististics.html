@@ -1,0 +1,142 @@
+{% extends "admin-nav.html" %}
+
+{% block title %} Atomic Odyssey {%endblock%}
+{% block mastery %} {{mastery}} {%endblock%}
+{% block level %} {{level}} {%endblock%}
+
+{% block content%}
+    
+    <head>
+        <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='styles/monitor.css') }}">
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
+        <link href="https://fonts.googleapis.com/css2?family=Josefin+Sans:wght@300&family=Nunito:wght@300&family=Outfit:wght@300&display=swap" rel="stylesheet">
+        <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@300..700&display=swap" rel="stylesheet">
+        <script src="https://cdn.plot.ly/plotly-2.31.1.min.js" charset="utf-8"></script>
+        <title>Monitor</title>        
+    </head>
+    <body>
+        <div class="most-container">
+            <div id = "total-user">  
+                <div class="title">
+                    <span class="material-symbols-outlined">
+                        eject
+                    </span>
+                    <span>Total User</span>
+                </div>
+                <h1>
+                    32
+                </h1>
+            </div>
+            <div id = "total-attempts">  
+                <div class="title">
+                    
+                    <span>Total Play Count</span>
+                </div>
+                <h1>
+                    32
+                </h1>
+            </div>
+            
+        </div>  
+        <div class="plot-container">
+            <div class = "plots" id = "average-by-level">
+
+            </div>
+            <div class = "plots" id = "time-by-level">
+    
+            </div>
+            <div class = "plots" id = "accuracy-by-level">
+    
+            </div>
+        </div>
+        <div class="leaderboards">
+            <h1>
+                Leaderboards by Mastery
+            </h1>
+            <div class="leads">
+                <h1>Name</h1>
+                <h1>Mastery</h1>
+            </div>
+        </div>
+        
+        
+        <script>
+            average = {{avg|tojson}};
+            console.log(average);
+            var data = [{
+                x:["Level 1","Level 2","Level 3","Level 4","Level 5","Level 6","Level 7","Level 8","Level 9","Level 10","Level 11","Level 12",],
+                y:[average["score"]["1"],average["score"]["2"],average["score"]["3"],average["score"]["4"],average["score"]["5"],average["score"]["6"],average["score"]["7"],average["score"]["8"],average["score"]["9"],average["score"]["10"],average["score"]["11"],average["score"]["12"]],
+                mode: "lines",
+                marker: {
+                    color: "#16fa0e",
+                    opacity: "0.8"
+                }                
+            }];
+
+            layout = {
+                    title: "Average Score per Level",
+                    paper_bgcolor: "rgba(12,12,12,0.3)",
+                    plot_bgcolor:  "rgba(12,12,12,0.3)",
+                    font:{
+                        color: "white",
+                        family: "Quicksand"
+                    } 
+                }
+            Plotly.newPlot(document.getElementById('average-by-level'),data, layout);
+
+            var timedata = [{
+                x:["Level 1","Level 2","Level 3","Level 4","Level 5","Level 6","Level 7","Level 8","Level 9","Level 10","Level 11","Level 12",],
+                y:[average["time"]["1"],average["time"]["2"],average["time"]["3"],average["time"]["4"],average["time"]["5"],average["time"]["6"],average["time"]["7"],average["time"]["8"],average["time"]["9"],average["time"]["10"],average["time"]["11"],average["time"]["12"]],
+                mode: "lines",
+                marker: {
+                    color: "#16fa0e",
+                    opacity: "0.8"
+                }                
+            }];
+
+            timelayout = {
+                    title: "Average Time Taken per Level",
+                    paper_bgcolor: "rgba(12,12,12,0.3)",
+                    plot_bgcolor:  "rgba(12,12,12,0.3)",
+                    font:{
+                        color: "white",
+                        family: "Quicksand"
+                    } 
+                }
+            Plotly.newPlot(document.getElementById('time-by-level'),timedata, timelayout);
+            
+            var accdata = [{
+                x:["Level 1","Level 2","Level 3","Level 4","Level 5","Level 6","Level 7","Level 8","Level 9","Level 10","Level 11","Level 12",],
+                y:[average["accuracy"]["1"],average["accuracy"]["2"],average["accuracy"]["3"],average["accuracy"]["4"],average["accuracy"]["5"],average["accuracy"]["6"],average["accuracy"]["7"],average["accuracy"]["8"],average["accuracy"]["9"],average["accuracy"]["10"],average["accuracy"]["11"],average["accuracy"]["12"]],
+                mode: "lines",
+                marker: {
+                    color: "#16fa0e",
+                    opacity: "0.8"
+                }                
+            }];
+
+            acclayout = {
+                    title: "Average Accuracy per Level",
+                    paper_bgcolor: "rgba(12,12,12,0.3)",
+                    plot_bgcolor:  "rgba(12,12,12,0.3)",
+                    font:{
+                        color: "white",
+                        family: "Quicksand"
+                    }
+                }
+            Plotly.newPlot(document.getElementById('accuracy-by-level'),accdata, acclayout);
+            document.getElementById("total-user").children[1].textContent = average["totaluser"];
+            document.getElementById("total-attempts").children[1].textContent = average["totalattempts"];
+
+            for(const i of average["leadbymastery"]){
+                document.getElementsByClassName("leaderboards")[0].innerHTML +=  `<div class="leads">
+                <span>${i["name"]}</span>
+                <span>${i["mastery"]}</span>
+            </div>`        
+            }
+        </script>
+    </body>
+{% endblock %}

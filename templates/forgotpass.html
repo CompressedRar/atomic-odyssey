@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='styles/login.css') }}">
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Josefin+Sans:wght@300&family=Nunito:wght@300&family=Outfit:wght@300&display=swap" rel="stylesheet">
+        <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@300..700&display=swap" rel="stylesheet">
+        <style>
+            
+        </style>
+    </head>
+    <body>
+        <div id = "bg-div" class = "background-container"> 
+            <img src="{{url_for('static', filename= 'styles/background.png')}}">
+        </div>
+        <iframe name = "dummy" id = "dummy" style="display:none"></iframe>
+        <div class = "logo-container">
+            <img width = "500"  height = "500" id = "logo-container__img" src="{{url_for('static', filename='styles/logo.png')}}"/>
+            <h1>Fun begins with an adventure.</h1>
+        </div>
+        <div class = "login-container" >
+            <div class = "login-container__contents" id = "login-form">
+                <h1>Account Recovery</h1>
+                <h2>Atomic Odyssey</h2>
+                <p>
+                    {{foundba}}
+                </p>
+                <form class = "login-container__form" method = "post" >
+                    <input type = "text" name = "mode" hidden="true" value = "login">
+                    <input type = "text" name = "username" placeholder="Username" required>
+                    <input type = "password" name = "oldpassword" placeholder="Old Password" required>
+                    <input type = "password" name = "newpassword" placeholder="New Password" required>
+                    <input type="submit" value="Recovery">
+                </form>
+                <p>
+                    Already have an account?
+                    <label id = "create-account__label">
+                        <a href="/" style = "text-decoration: none; color: rgb(32, 137, 241);">
+                            Login here.
+                        </a>
+                    </label>
+                </p>
+            </div>            
+        </div>
+        <script src = "{{url_for('static', filename = 'script/signingin.js')}}"></script>
+    </body>
+</html>
