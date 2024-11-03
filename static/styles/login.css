@@ -1,0 +1,205 @@
+body {
+    margin: 0;
+    display: flex;
+    font-family: 'Outfit';
+    font-weight: 100;
+    background-color: #143248;
+}
+.background-container {
+    transition: 1s;
+    width: 100vw;
+    height: 100vh;
+    position: fixed;
+    z-index: -1;
+    opacity: 1;
+    filter: blur(5px);
+}
+.logo-container {
+    height: 100vh;
+    width: 50%;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+}
+.logo-container h1{
+    font-size: 4vw;
+    text-align: center;
+    background: -webkit-linear-gradient(green, lightgreen);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    margin-top: -5%;
+    margin-left: 30%;
+}
+.logo-container img  {
+    margin-left: 30%;
+}
+.login-container{
+    height: 100vh;
+    width: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.login-container__contents{
+    transition: 0.5s;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background-color: white;
+    margin-left: 30%;
+    height: 80%;
+    width: 50%;
+    padding: 4%;
+    box-shadow: 0px 0px 20px 1px #121212;
+}
+.login-container__form {
+    
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    row-gap: 3vh;
+    width: 90%;
+}
+
+.login-container__form input[type="text"], .login-container__form input[type="password"]{
+    font-family: 'Outfit';
+    width: 80%;
+    height: 20%;
+    padding: 3%;
+    font-size: 15px;
+    border-style: solid;
+    border-width: 1px;
+    border-radius: 10pt;
+    border-color: grey;
+}
+.login-container__form input[type="submit"] {
+    background-color: #31CF0B;
+    color: white;
+    font-weight: bold;
+    font-family: 'Nunito';
+    width: 85%;
+    font-size: 1.3vw;
+    padding: 4%;
+    text-align: center;
+    border-width: 0px;
+    border-radius: 5pt;
+    
+
+}
+.login-container__contents h1 {
+    font-size: 3vw;
+}
+.login-container__contents h2 {
+    font-size: 3.5vw ;  
+    margin:-5%;
+    margin-bottom: 10%;
+    background: -webkit-linear-gradient(darkgreen, lightgreen);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+
+}
+.login-container__contents label{
+    color: rgb(0, 119, 255);
+}
+.login-container__contents #create-account__label:hover{
+    text-decoration: underline;
+}
+.signup-container{
+    transition: 0.5s;
+    position: fixed;
+    right:0;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;    
+    align-items: center;
+    height: 100vh;
+    width: 50%;
+    
+}
+.signup-container h1{
+    font-size: 2vw;
+    text-align: center;
+    background: -webkit-linear-gradient(green, lightgreen);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    margin-bottom: 12%;
+}
+
+.signup-container__form label{
+    color: lightblue;
+}
+.signup-container__form label:hover{
+    text-decoration: underline;
+}
+
+.signup-container__form{
+    transition: 0.5s;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background-color: #162e3f;
+    color: white;
+    margin-left: 30%;
+    height: 80%;
+    width: 50%;
+    padding: 4%;
+    row-gap: 3vh;
+    border-style: solid;
+    border-width: 1px;
+    border-color: #31CF0B;
+}
+
+.signup-container__form input[type="text"], .signup-container__form input[type="password"]{
+    font-family: 'Outfit';
+    width: 80%;
+    padding: 3%;
+    font-size: 15px;
+    border-style: solid;
+    border-width: 1px;
+    border-radius: 10pt;
+    background-color: #143248;
+    border-color: #31CF0B;
+    color: darkkhaki;
+}
+.signup-container__form input::placeholder{
+    color: silver;
+}
+.signup-container__form input[type="submit"] {
+    transition: 0.5s;
+    background-color: #31CF0B;
+    color: white;
+    font-weight: bold;
+    font-family: 'Nunito';
+    width: 85%;
+    font-size: 1.3vw;
+    padding: 4%;
+    text-align: center;
+    border-width: 0px; 
+    border-radius: 5pt;
+    margin-bottom: -5%;
+}
+
+.signup-container__form input[type="submit"]:disabled {
+    background-color: #27511d;
+}
+.signin-msg{
+    margin-bottom: 30px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-family: 'Outfit';
+    width: 80%;
+    height: 3vh;
+    padding: 3%;
+    font-size: 15px;
+    border-style: solid;
+    border-width: 1px;
+    border-radius: 10pt;
+    background-color: #ff8ba3;
+    border-color: #e94048;
+    color: white;
+}
